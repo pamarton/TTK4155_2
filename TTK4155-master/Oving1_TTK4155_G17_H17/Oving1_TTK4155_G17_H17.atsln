@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Oving1_TTK4155_G17_H17", "Oving1_TTK4155_G17_H17\Oving1_TTK4155_G17_H17.cproj", "{883BC6D3-276E-4C57-BF16-A97B4E902388}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{883BC6D3-276E-4C57-BF16-A97B4E902388}.Debug|AVR.ActiveCfg = Debug|AVR
+		{883BC6D3-276E-4C57-BF16-A97B4E902388}.Debug|AVR.Build.0 = Debug|AVR
+		{883BC6D3-276E-4C57-BF16-A97B4E902388}.Release|AVR.ActiveCfg = Release|AVR
+		{883BC6D3-276E-4C57-BF16-A97B4E902388}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
