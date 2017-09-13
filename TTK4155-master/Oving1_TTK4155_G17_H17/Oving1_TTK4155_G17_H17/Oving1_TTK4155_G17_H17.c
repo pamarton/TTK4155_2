@@ -19,18 +19,6 @@ void SRAM_test(void);
 int main(void)
 {
 	init_UART(UBBR);
-	BIT_ON(MCUCR,SRE);
-	
-	
-	DDRA = 0xFF;
-	BIT_OFF_A(0);
-	BIT_ON_A(1);
-	
-	
-	
-	BIT_ON(DDRE,1);
-	BIT_ON(PORTE,1);
-	BIT_OFF(PORTE,1);
 	
 	SRAM_test();
 	
@@ -44,7 +32,9 @@ int main(void)
 #include <stdlib.h>
 void SRAM_test(void)
 {
+	BIT_ON(MCUCR,SRE);
 	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
+	
 	uint16_t ext_ram_size = 0x800;
 	uint16_t write_errors = 0;
 	uint16_t retrieval_errors = 0;
@@ -69,7 +59,8 @@ void SRAM_test(void)
 	for (uint16_t i = 0; i < ext_ram_size; i++) {
 		uint8_t some_value = rand();
 		uint8_t retreived_value = ext_ram[i];
-		if (retreived_value != some_value) {printf("Retrieval phase error: ext_ram[%4d] = %02X (should be %02X)\n",i, retreived_value, some_value);
+		if (retreived_value != some_value) {
+			printf("Retrieval phase error: ext_ram[%4d] = %02X (should be %02X)\n",i, retreived_value, some_value);
 			retrieval_errors++;
 		}
 	}
