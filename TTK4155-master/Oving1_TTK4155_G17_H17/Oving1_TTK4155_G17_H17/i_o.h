@@ -37,4 +37,6 @@
 #define BIT_OFF_D(b) BIT_OFF(PORTD, b)
 #define BIT_SET_D(b,v) BIT_SET(PORTD, b)
 
+#define WAIT_UNTIL_SET(r,b)	while(r |= BIT_MASK(b))
+
 #endif /* I_O_H_ */
