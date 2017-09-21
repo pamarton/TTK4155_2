@@ -38,6 +38,7 @@ SUBDIRS :=
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../adc.c \
+../button_interrupts.c \
 ../input_conversion.c \
 ../i_o.c \
 ../Oving1_TTK4155_G17_H17.c \
@@ -52,6 +53,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 adc.o \
+button_interrupts.o \
 input_conversion.o \
 i_o.o \
 Oving1_TTK4155_G17_H17.o \
@@ -59,6 +61,7 @@ uart.o
 
 OBJS_AS_ARGS +=  \
 adc.o \
+button_interrupts.o \
 input_conversion.o \
 i_o.o \
 Oving1_TTK4155_G17_H17.o \
@@ -66,6 +69,7 @@ uart.o
 
 C_DEPS +=  \
 adc.d \
+button_interrupts.d \
 input_conversion.d \
 i_o.d \
 Oving1_TTK4155_G17_H17.d \
@@ -73,6 +77,7 @@ uart.d
 
 C_DEPS_AS_ARGS +=  \
 adc.d \
+button_interrupts.d \
 input_conversion.d \
 i_o.d \
 Oving1_TTK4155_G17_H17.d \
@@ -92,6 +97,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

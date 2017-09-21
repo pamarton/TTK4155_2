@@ -10,18 +10,18 @@
 #define UBBR 32 - 1 //F_CPU/(16*BAUDRATE)-1 //USART BAUD RATE REGISTER VALUE
 #include "adc.h"
 #include <avr/io.h>
-#include <avr/interrupt.h>
 
 //#include <avr/interrupt.h>
 #include "uart.h"
 #include "i_o.h"
 #include "input_conversion.h"
-
+#include "button_interrupts.h"
 #define MAX_SIGNAL 0xFF
 #define MIN_SIGNAL 0
 void SRAM_test(void);
 void initalize(void);
-void initalize_interrupts();
+
+
 int main(void)
 {
 	
@@ -37,34 +37,10 @@ int main(void)
 	
 }
 
-void initalize_interrupts(){ 
-	BIT_ON(DDRB, PD2);//enable input
-	BIT_ON(DDRB, PD3);
-	BIT_ON(PORTB, PD2);//
-	BIT_ON(PORTB, PD3);
-	
-	BIT_ON(MCUCR, ISC00);
-	BIT_ON(MCUCR, ISC01);
-	BIT_ON(MCUCR, ISC10);
-	BIT_ON(MCUCR, ISC11);
-	
-	BIT_ON(GICR, INT0);
-	BIT_ON(GICR, INT1);
-	sei();
-}
 
 
 
 
-ISR(INT0_vect){//interrupt button Right
-	printf("Right button pressed, printing values:\t\t");
-	printf("X: %i\tY: %i\tL: %i\tR: %i\n",read_control_input('X'),read_control_input('Y'),read_control_input('L'),read_control_input('R'));
-	
-}
-ISR(INT1_vect){//interrupt button Left
-	printf("L");
-	
-}
 
 
 void initalize(void){

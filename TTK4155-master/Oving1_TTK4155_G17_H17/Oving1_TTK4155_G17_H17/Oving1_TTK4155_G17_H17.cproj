@@ -115,6 +115,12 @@
     <Compile Include="adc.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="button_interrupts.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="button_interrupts.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="input_conversion.c">
       <SubType>compile</SubType>
     </Compile>
