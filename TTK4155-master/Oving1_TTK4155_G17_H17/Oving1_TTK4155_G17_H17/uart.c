@@ -18,7 +18,6 @@ void init_UART(unsigned int ubrr){
 	UBRR0L = (unsigned char)(ubrr);
 	//enable receiver and transmitter
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
-	
 	fdevopen((int(*)(char, struct __file*))&send_UART, (int(*)(struct __file*))&recieve_UART); //overrides printf("string");
 }
 

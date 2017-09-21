@@ -8,92 +8,84 @@
 #define F_CPU 4915200 // clock frequency in Hz
 #define BAUDRATE 9600 // Valgt verdi data sendt pr sekund
 #define UBBR 32 - 1 //F_CPU/(16*BAUDRATE)-1 //USART BAUD RATE REGISTER VALUE
+#include "adc.h"
 #include <avr/io.h>
-#include <util/delay.h>
+#include <avr/interrupt.h>
+
 //#include <avr/interrupt.h>
 #include "uart.h"
 #include "i_o.h"
-int readADC(int channel);
+#include "input_conversion.h"
 
-#define MAX_TRESHOLD 245
-#define MIN_TRESHOLD 10
-#define MID_TRESHOLD 127
-
+#define MAX_SIGNAL 0xFF
+#define MIN_SIGNAL 0
 void SRAM_test(void);
-
+void initalize(void);
+void initalize_interrupts();
 int main(void)
 {
-	init_UART(UBBR);
 	
-	SRAM_test();
+	initalize();	
 	
-	testUart();
+	
 	while (1)
 	{
-		printf("placeholder\n");
-	}
-}
 
-int readADC(int channel){
-	volatile char *adc_on = (char *) 0x1400;
-	switch(channel){
-		case 1:	adc_on[0] = 0b00010100; break;
-		case 2:	adc_on[0] = 0b00010101; break;
-		case 3:	adc_on[0] = 0b00010110; break;
-		case 4: adc_on[0] = 0b00010111; break;
-		default: return 0;
 	}
-	int val = (int)adc_on[0];
-	_delay_us(50); //TODO, CHANGE THIS TO THE CODE BELLOW
-	//while(!(PORTA |= BIT_MASK(PINA5)));
-	//printf("Value: %i\n",val);
-	return val;
-}
-
-
-int ADC_to_percent(int signal){
-	double new_signal = signal - 128;
-	new_signal = new_signal*100/128; 
-	printf("%lf",new_signal);
-	/*if(signal < MIN_TRESHOLD){
-		signal = 0;
-		printf("MIN:%i\n",signal);
-	}
-	else if (signal > MAX_TRESHOLD)
-	{
-		signal = 255;
-		printf("MAX:%i\n",signal);
-	}
-	else if ((signal <= MID_TRESHOLD + 5) && (signal >= MID_TRESHOLD - 5)){
-		signal = MID_TRESHOLD;
-		printf("MID:%i\n",signal);
-	}
-	else{
-		printf("REG:%i\n",signal);
-	}*/
 	
+	//testUart();
 	
-	return 0;
+}
+
+void initalize_interrupts(){ 
+	BIT_ON(DDRB, PD2);//enable input
+	BIT_ON(DDRB, PD3);
+	BIT_ON(PORTB, PD2);//
+	BIT_ON(PORTB, PD3);
+	
+	BIT_ON(MCUCR, ISC00);
+	BIT_ON(MCUCR, ISC01);
+	BIT_ON(MCUCR, ISC10);
+	BIT_ON(MCUCR, ISC11);
+	
+	BIT_ON(GICR, INT0);
+	BIT_ON(GICR, INT1);
+	sei();
 }
 
 
 
 
+ISR(INT0_vect){//interrupt button Right
+	printf("Right button pressed, printing values:\t\t");
+	printf("X: %i\tY: %i\tL: %i\tR: %i\n",read_control_input('X'),read_control_input('Y'),read_control_input('L'),read_control_input('R'));
+	
+}
+ISR(INT1_vect){//interrupt button Left
+	printf("L");
+	
+}
+
+
+void initalize(void){
+	
+	init_UART(UBBR);
+	printf("INITIALIZING...\n\nUART successfully initialized\n\n");
+	BIT_ON(MCUCR,SRE); //SET THIS IN SOME INITALIZE FUNBCTION
+	initialize_control_input();
+	printf("controll input successfully initialized\n\n");
+	SRAM_test();
+	printf("SRAM successfully initialized\n");
+	initalize_interrupts();
+	printf("Interrupts successfully initialized\n");
+	printf("Interrupts activated\n");
+	printf("\nINITIALIZATION COMPLETE\n");
+}
 
 #include <stdlib.h>
 void SRAM_test(void)
 {
-	BIT_ON(MCUCR,SRE);
 	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
-	
-	
-	while(1){
-		ADC_to_percent(readADC(1));
-		
-		//readADC(1);
-	}
-	
-	
 	uint16_t ext_ram_size = 0x800;
 	uint16_t write_errors = 0;
 	uint16_t retrieval_errors = 0;

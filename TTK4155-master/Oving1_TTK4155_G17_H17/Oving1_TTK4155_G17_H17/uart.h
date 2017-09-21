@@ -8,6 +8,7 @@
 #ifndef UART_H_
 #define UART_H_
 
+#include "new_printf.h"
 #include <avr/io.h>
 #include <stdio.h>
 #define F_CPU 4915200 // clock frequency in Hz

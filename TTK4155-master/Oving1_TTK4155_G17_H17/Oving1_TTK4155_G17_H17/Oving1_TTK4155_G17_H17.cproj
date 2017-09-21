@@ -109,6 +109,18 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="adc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="input_conversion.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="input_conversion.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="i_o.c">
       <SubType>compile</SubType>
     </Compile>
